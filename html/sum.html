@@ -2,6 +2,7 @@
 <html>
     <head>
         <title>Test website</title>
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
         <style>
             html, body, .container {
                 height:100%; 
@@ -21,18 +22,10 @@
     </head>
     <body>
         <div class="container">
-            <form action="/add/compute" method="POST" style="width: 400px;">
-                <div>
-                    <input name="number1" placeholder="Enter number 1" />
-                </div>
-                <div>
-                    <input name="number2" placeholder="Enter number 2" />
-                </div>
-                    
-                <div>
-                    <button>Add</button>
-                </div>
-            </form>
+            <span> Response is: {sum}</span>
+            <span> Response is: {sum1}</span>
+            <span> Response is: {sum2}</span>
+            <span> Response is: {sum3}</span>
         </div>
     </body>
 </html>

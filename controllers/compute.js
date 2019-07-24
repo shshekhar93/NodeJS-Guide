@@ -10,6 +10,8 @@ function compute(req, res) {
     const number2 = parseFloat(req.body.number2);
     const result = add(number1, number2);
 
+    req.session.add_result = result;
+
     res.render('sum.pug', {
         sum: result
     });

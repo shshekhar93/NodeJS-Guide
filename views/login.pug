@@ -28,13 +28,12 @@ html
             }
     body
         div.container
-            if sum
-                div.response.form-field Response is: #{sum}
-
-            form(action="/add/compute" method="POST" style="width=400px")
+            if error
+                div.form-field Username or password incorrect
+            form(action="/login" method="POST" style="width=400px")
                 div.form-field
-                    input.form-control(name="number1" placeholder="Enter number 1")
+                    input.form-control(name="username" placeholder="Enter user name")
                 div.form-field
-                    input.form-control(name="number2" placeholder="Enter number 2")
+                    input.form-control(type="password" name="password" placeholder="Enter password")
                 div.btn-container
-                    button.btn.btn-primary(type="submit") Add
+                    button.btn.btn-primary(type="submit") Login

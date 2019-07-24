@@ -27,14 +27,6 @@ html
                 margin-bottom: 10px;
             }
     body
-        div.container
-            if sum
-                div.response.form-field Response is: #{sum}
-
-            form(action="/add/compute" method="POST" style="width=400px")
-                div.form-field
-                    input.form-control(name="number1" placeholder="Enter number 1")
-                div.form-field
-                    input.form-control(name="number2" placeholder="Enter number 2")
-                div.btn-container
-                    button.btn.btn-primary(type="submit") Add
+        div.container 
+            span Hi #{name}. You're now logged in
+            

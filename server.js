@@ -1,11 +1,36 @@
 const express = require('express');
-const url = require('url');
 const fs = require('fs');
 const morgan = require('morgan');
 const BodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const computeObj = require('./controllers/compute');
+const DB = require('./lib/database');
+const UserModel = require('./models/user');
+
+DB.connect();
+
+// const user = new UserModel({
+//     name: {
+//         first_name: 'Jane',
+//         last_name: 'Doe'
+//     },
+//     email:'john.doe@gmail.com',
+//     password: 'abcd'
+// });
+
+// user.save(function(err) {
+//     console.log('err is', err);
+// });
+
+UserModel.find({}, function(err, docs) {
+    if(err) {
+        console.log(err);
+        return;
+    }
+    console.log(docs);
+});
+
 
 function notFound(req, res) {
     const stream = fs.createReadStream(__dirname + 

@@ -1,16 +1,20 @@
 const express = require('express');
 const router = express.Router();
-const UserModel = require('../models/user');
-const bcrypt = require('bcryptjs');
+const Auth = require('../lib/auth');
+const passport = require('passport');
+const _ = require('lodash');
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  if(req.session.isLoggedIn) {
-    const {first_name, last_name} = req.session.user.name;
+router.get('/', function(req, res) {
+  if(req.isAuthenticated()) {
+    const first_name = _.get(req, 'user.name.first_name');
+    const last_name = req.user.name.last_name;
     res.render('home', {
       name: first_name + ' ' + last_name
     });
     return;
+
+    // return res.end('Logged-in');
   }
   res.render('index', {});
 });
@@ -37,59 +41,9 @@ router.post('/register', function(req, res) {
   });
 });
 
-router.post('/login', function(req, res) {
-  const { username, password } = req.body;
-
-  UserModel.findOne({email: username})
-  .then(function(user) {
-    // Sucess
-    bcrypt.compare(password, user.password, function(err, isEqual) {
-      if(err) {
-        console.log(err);
-        throw err;
-      }
-
-      req.session.isLoggedIn = isEqual;
-
-      if(isEqual) {
-        req.session.user = user.toJSON();
-      }
-      res.redirect('/');
-    });
-    // return 'HELLO';
-    return UserModel.findOne({username: username});
-  })
-  .then(function(foo) {
-    return 'World';
-  })
-  .then(function(otherVar) {
-
-  })
-  .catch(function(err) {
-    console.log(err);
-    throw err;
-  })
-
-  UserModel.findOne({email: username}, function(err, user) {
-    if(err) {
-      console.log(err);
-      throw err;
-    }
-
-    bcrypt.compare(password, user.password, function(err, isEqual) {
-      if(err) {
-        console.log(err);
-        throw err;
-      }
-
-      req.session.isLoggedIn = isEqual;
-
-      if(isEqual) {
-        req.session.user = user.toJSON();
-      }
-      res.redirect('/');
-    })
-  });
-});
+router.post('/login', passport.authenticate('local', {
+  successRedirect: '/',
+  failureRedirect: '/'
+}));
 
 module.exports = router;

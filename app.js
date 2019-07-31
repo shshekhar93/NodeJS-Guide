@@ -4,6 +4,8 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const lessMiddleware = require('less-middleware');
 const logger = require('morgan');
+const passport = require('passport');
+const Auth = require('./lib/auth');
 
 const session = require('express-session');
 
@@ -30,6 +32,8 @@ app.use(session({
   saveUninitialized: true,
   secret: 'keyboard cat'
 }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

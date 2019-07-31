@@ -18,6 +18,11 @@ block content
 
 
   div.container
-    h4 Welcome #{name}
-    h4 You're now logged-in!&nbsp;
-      a(href="/shop") Click here to start shopping
+    h4 Cart item: #{numCartItems}
+    h4 Cart amount: #{cartPrice}
+    hr
+    each item in items
+      form(action="/shop/addToCart" method="POST")
+        input(type="hidden" name="itemId" value=item._id)
+        p #{item.name} - #{item.price} 
+          button.btn.btn-secondary(type="submit") add to cart

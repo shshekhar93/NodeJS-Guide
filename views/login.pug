@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  
+  div.container.centered
+    h4(style="margin-bottom: 20px") Welcome to e-Shoppie
+    form(action="/login" method="POST")
+      .form-group
+        input.form-control(name="username" placeholder="Email")
+      .form-group
+        input.form-control(type="password" name="password" placeholder="password")
+      .form-group.text-center
+        button.btn.btn-primary(type="submit") Login
+    .form-group.text-center
+      p New user? 
+        a(href="/register") Register here

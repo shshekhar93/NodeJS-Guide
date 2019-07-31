@@ -3,20 +3,20 @@ const router = express.Router();
 const Auth = require('../lib/auth');
 const passport = require('passport');
 const _ = require('lodash');
+const bcrypt = require('bcryptjs');
+const UserModel = require('../models/user');
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  if(req.isAuthenticated()) {
-    const first_name = _.get(req, 'user.name.first_name');
-    const last_name = req.user.name.last_name;
-    res.render('home', {
-      name: first_name + ' ' + last_name
-    });
-    return;
-
-    // return res.end('Logged-in');
+  if(!req.isAuthenticated()) {
+    return res.redirect('/login');
   }
-  res.render('index', {});
+
+  const first_name = _.get(req, 'user.name.first_name');
+  const last_name = req.user.name.last_name;
+  res.render('home', {
+    name: first_name + ' ' + last_name
+  });
 });
 
 router.get('/register', function(req, res) {
@@ -41,9 +41,18 @@ router.post('/register', function(req, res) {
   });
 });
 
+router.get('/login', function(req, res) {
+  res.render('login');
+})
+
 router.post('/login', passport.authenticate('local', {
   successRedirect: '/',
-  failureRedirect: '/'
+  failureRedirect: '/login'
 }));
+
+router.get('/logout', function(req, res) {
+  req.logout();
+  res.redirect('/login');
+})
 
 module.exports = router;

@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  div.container.centered
+    h4(style="margin-bottom: 20px") Add an item to inventory
+    form(action="/shop/add-items" method="POST")
+      .form-group
+        input.form-control(name="name" placeholder="Item name")
+      .form-group
+        input.form-control(name="description" placeholder="Item detail")
+      .form-group
+        input.form-control(name="price" placeholder="Price of item")
+      .form-group
+        input.form-control(name="category" placeholder="Category (Electornics, etc)")
+      .form-group.text-center
+        button.btn.btn-primary(type="submit") Add

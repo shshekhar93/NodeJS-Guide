@@ -58,7 +58,18 @@ router.post('/addToCart', function(req, res) {
         itemPrice: item.price
       });
 
-      res.redirect('/shop');
+      let cartPrice = 0;
+
+      if(req.session.cart) {
+        req.session.cart.forEach(function(cartItem) {
+          cartPrice = cartPrice + Number(cartItem.itemPrice);
+        })
+      }
+
+      res.json({
+        cartPrice: cartPrice,
+        numCartItem: _.get(req, 'session.cart.length', 0)
+      });
     });
 });
 

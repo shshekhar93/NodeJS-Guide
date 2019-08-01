@@ -18,11 +18,17 @@ block content
 
 
   div.container
-    h4 Cart item: #{numCartItems}
-    h4 Cart amount: #{cartPrice}
+    h4 Cart item: 
+      span(id="num-item") #{numCartItems}
+    h4 Cart amount: 
+      span(id="cart-price") #{cartPrice}
+    div 
+      button.btn.btn-primary Checkout
     hr
     each item in items
-      form(action="/shop/addToCart" method="POST")
+      form(class="item-form" action="/shop/addToCart" method="POST")
         input(type="hidden" name="itemId" value=item._id)
         p #{item.name} - #{item.price} 
           button.btn.btn-secondary(type="submit") add to cart
+
+  script(src="/js/shop.js" defer)

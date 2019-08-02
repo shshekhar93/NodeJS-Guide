@@ -23,10 +23,17 @@ router.get('/', function(req, res) {
 });
 
 router.get('/add-item', function(req, res) {
-  res.render('add-item');
+  if(req.isAuthenticated() && req.user.type === 'seller') {
+    return res.render('add-item');
+  }
+  return res.status(403).send('Forbidden');
 });
 
 router.post('/add-items', function(req, res) {
+  if(!req.isAuthenticated() || req.user.type !== 'seller') {
+    return res.status(403).send('Forbidden');
+  }
+
   const name = req.body.name;
   const description = req.body.description;
   const price = req.body.price;
@@ -46,6 +53,10 @@ router.post('/add-items', function(req, res) {
 });
 
 router.post('/addToCart', function(req, res) {
+  if(!req.isAuthenticated()) {
+    return res.status(401).send('Unauthorized');
+  }
+
   const itemId = req.body.itemId;
 
   InventoryModel.findOne({_id: itemId})

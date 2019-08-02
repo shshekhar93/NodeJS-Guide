@@ -24,12 +24,13 @@ router.get('/register', function(req, res) {
 });
 
 router.post('/register', function(req, res) {
-  const { email, password, firstName, lastName } = req.body;
+  const { email, password, type, firstName, lastName } = req.body;
 
   bcrypt.hash(password, 8, function(err, hashedPassword) {
     const user = new UserModel({
       email: email,
       password: hashedPassword,
+      type: type,
       name: {
         first_name: firstName,
         last_name: lastName

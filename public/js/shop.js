@@ -19,5 +19,11 @@ $(document)
           $('#num-item').text(data.numCartItem);
           $('#cart-price').text(data.cartPrice);
         })
+        .catch(function(err) {
+          console.log(err);
+          if(err.status === 401) {
+            window.location.href = '/login';
+          }
+        })
     });
   });
